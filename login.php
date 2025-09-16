@@ -46,6 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p>Senha: <input type="password" name="password" required></p>
             <p><input type="submit" value="Entrar"></p>
         </form>
+        <p style="text-align: center; margin-top: 20px;">
+    <a href="index.php">
+        <i class="fas fa-arrow-left"></i> Voltar para o status dos laboratórios
+    </a>
+</p>
         <?php if ($erro): ?>
             <p style="color:red; text-align:center;"><?= $erro ?></p>
         <?php endif; ?>
