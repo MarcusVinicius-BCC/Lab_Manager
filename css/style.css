@@ -1,0 +1,161 @@
+body {
+	font-family: 'Segoe UI', Arial, sans-serif;
+	background: linear-gradient(135deg, #232526 0%, #414345 100%);
+	margin: 0;
+}
+.header {
+	background: #232526;
+	color: #00e6e6;
+	padding: 30px 0 10px 0;
+	text-align: center;
+	font-size: 2.2em;
+	letter-spacing: 2px;
+	font-weight: bold;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.header i {
+	font-size: 1.2em;
+	margin-right: 10px;
+}
+nav {
+	background: #232526;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	padding: 12px 0;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+nav a {
+	color: #00e6e6;
+	text-decoration: none;
+	font-weight: 500;
+	font-size: 1.1em;
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	transition: color 0.2s;
+}
+nav a:hover {
+	color: #fff;
+}
+.container {
+	max-width: 1100px;
+	margin: 30px auto;
+	background: #fff;
+	padding: 30px 20px;
+	border-radius: 12px;
+	box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+h1, h2, h3 {
+	color: #232526;
+	margin-bottom: 18px;
+}
+.dashboard-cards {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: flex-start;
+}
+.card {
+	background: linear-gradient(135deg, #00e6e6 0%, #232526 100%);
+	color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+	padding: 22px 18px;
+	min-width: 220px;
+	flex: 1 1 220px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	font-size: 1.1em;
+}
+.card .lab-title {
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+.card .lab-info {
+	margin-bottom: 6px;
+}
+.card .lab-aulas {
+	font-size: 1.1em;
+	font-weight: 500;
+	color: #fff;
+	background: #232526;
+	padding: 4px 10px;
+	border-radius: 6px;
+	margin-top: 8px;
+}
+table {
+	width: 100%;
+	border-collapse: collapse;
+	margin-bottom: 20px;
+	overflow-x: auto;
+	display: block;
+}
+table th, table td {
+	border: 1px solid #ccc;
+	padding: 8px;
+	text-align: left;
+}
+table th {
+	background: #ecf0f1;
+}
+ul {
+	list-style: none;
+	padding: 0;
+}
+ul li {
+	background: #ecf0f1;
+	margin-bottom: 5px;
+	padding: 8px;
+	border-radius: 4px;
+}
+.flashes {
+	color: #e74c3c;
+	font-weight: bold;
+}
+form p {
+	margin-bottom: 10px;
+}
+input, select {
+	padding: 6px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	width: 100%;
+	max-width: 400px;
+	box-sizing: border-box;
+}
+input[type="checkbox"] {
+	width: auto;
+	max-width: none;
+	display: inline-block;
+}
+input[type="submit"] {
+	background: #00e6e6;
+	color: #232526;
+	border: none;
+	cursor: pointer;
+	padding: 8px 16px;
+	border-radius: 4px;
+	width: auto;
+	font-weight: bold;
+}
+input[type="submit"]:hover {
+	background: #232526;
+	color: #00e6e6;
+}
+
+@media (max-width: 800px) {
+	.dashboard-cards { flex-direction: column; gap: 16px; }
+	.container { padding: 10px; margin: 10px; }
+}
+@media (max-width: 600px) {
+	.container { padding: 6px; margin: 6px; }
+	table, thead, tbody, th, td, tr { display: block; width: 100%; }
+	table th, table td { box-sizing: border-box; width: 100%; display: block; }
+	nav { flex-direction: column; align-items: flex-start; gap: 8px; }
+	nav a { margin-right: 0; }
+	h1, h2, h3 { font-size: 1.2em; }
+}
