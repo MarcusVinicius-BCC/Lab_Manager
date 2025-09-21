@@ -1,20 +1,5 @@
 <?php
 session_start();
-
-// --- Configuração de E-mail ---
-$admin_email = "admin@example.com"; // Mude para o e-mail do administrador
-$site_name = "LabManager";
-
-function send_email($to, $subject, $message) {
-    $headers = "From: noreply@labmanager.com\r\n";
-    $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-type: text/html; charset=UTF-8\r\n";
-    return mail($to, $subject, $message, $headers);
-}
-
-// --- Fim Configuração de E-mail ---
-
-
 require_once "db.php";
 
 date_default_timezone_set("America/Sao_Paulo");
@@ -40,29 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agendar']) && $user_r
         $stmt = $conexao->prepare($sql);
         $stmt->execute([$nome, $matricula, $email, $telefone, $lab_id, $dia, $turno, $motivo]);
 
-        // Notificação para o Admin
-        $lab_nome_display = "";
-        foreach ($labs as $l) {
-            if ($l['id'] == $lab_id) {
-                $lab_nome_display = htmlspecialchars($l['nome']) . " (" . htmlspecialchars($l['numero']) . ")";
-                break;
-            }
-        }
-        $subject_admin = "Nova Solicitação de Agendamento - " . $site_name;
-        $message_admin = "<p>Uma nova solicitação de agendamento foi enviada:</p>";
-        $message_admin .= "<ul>";
-        $message_admin .= "<li><b>Nome:</b> " . htmlspecialchars($nome) . "</li>";
-        $message_admin .= "<li><b>Matrícula:</b> " . htmlspecialchars($matricula) . "</li>";
-        $message_admin .= "<li><b>Email:</b> " . htmlspecialchars($email) . "</li>";
-        $message_admin .= "<li><b>Telefone:</b> " . htmlspecialchars($telefone) . "</li>";
-        $message_admin .= "<li><b>Laboratório:</b> " . $lab_nome_display . "</li>";
-        $message_admin .= "<li><b>Dia:</b> " . date("d/m/Y", strtotime($dia)) . "</li>";
-        $message_admin .= "<li><b>Turno:</b> " . ucfirst($turno) . "</li>";
-        $message_admin .= "<li><b>Motivo:</b> " . htmlspecialchars($motivo) . "</li>";
-        $message_admin .= "</ul>";
-        $message_admin .= "<p>Acesse o painel de agendamentos para aprovar ou rejeitar: <a href=\"http://localhost/lab_manager_php/agendamentos.php\">Agendamentos</a></p>";
-send_email($admin_email, $subject_admin, $message_admin);
-
         $mensagem = ["tipo" => "success", "texto" => "Solicitação enviada com sucesso!"];
     } catch (PDOException $e) {
         $mensagem = ["tipo" => "error", "texto" => "Erro ao solicitar: " . $e->getMessage()];
@@ -84,22 +46,6 @@ if ($user_role === 'admin' && isset($_GET['acao'], $_GET['id'])) {
         $sql = "UPDATE agendamentos SET status=? WHERE id=?";
         $stmt = $conexao->prepare($sql);
         $stmt->execute([$acao, $id]);
-
-        // Notificação para o Usuário
-        $subject_user = "Status do seu Agendamento - " . $site_name;
-        $message_user = "<p>O status da sua solicitação de agendamento foi atualizado:</p>";
-        $message_user .= "<ul>";
-        $message_user .= "<li><b>Laboratório:</b> " . htmlspecialchars($agendamento['lab_nome']) . " (" . htmlspecialchars($agendamento['numero']) . ")</li>";
-        $message_user .= "<li><b>Dia:</b> " . date("d/m/Y", strtotime($agendamento['dia'])) . "</li>";
-        $message_user .= "<li><b>Turno:</b> " . ucfirst($agendamento['turno']) . "</li>";
-        $message_user .= "<li><b>Status:</b> " . ($acao === 'aprovado' ? "Aprovado" : "Rejeitado") . "</li>";
-        $message_user .= "</ul>";
-        if ($acao === 'aprovado') {
-            $message_user .= "<p>Sua solicitação foi aprovada. Você pode comparecer ao laboratório no dia e turno agendados.</p>";
-        } else {
-            $message_user .= "<p>Sua solicitação foi rejeitada. Por favor, entre em contato com o administrador para mais detalhes.</p>";
-        }
-        send_email($agendamento['email'], $subject_user, $message_user);
     }
 
     header("Location: agendamentos.php");
