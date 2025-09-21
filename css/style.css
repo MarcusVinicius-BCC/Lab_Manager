@@ -1,161 +1,445 @@
-body {
-	font-family: 'Segoe UI', Arial, sans-serif;
-	background: linear-gradient(135deg, #232526 0%, #414345 100%);
-	margin: 0;
-}
-.header {
-	background: #232526;
-	color: #00e6e6;
-	padding: 30px 0 10px 0;
-	text-align: center;
-	font-size: 2.2em;
-	letter-spacing: 2px;
-	font-weight: bold;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-}
-.header i {
-	font-size: 1.2em;
-	margin-right: 10px;
-}
-nav {
-	background: #232526;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	gap: 20px;
-	padding: 12px 0;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-}
-nav a {
-	color: #00e6e6;
-	text-decoration: none;
-	font-weight: 500;
-	font-size: 1.1em;
-	display: flex;
-	align-items: center;
-	gap: 6px;
-	transition: color 0.2s;
-}
-nav a:hover {
-	color: #fff;
-}
-.container {
-	max-width: 1100px;
-	margin: 30px auto;
-	background: #fff;
-	padding: 30px 20px;
-	border-radius: 12px;
-	box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-}
-h1, h2, h3 {
-	color: #232526;
-	margin-bottom: 18px;
-}
-.dashboard-cards {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
-	justify-content: flex-start;
-}
-.card {
-	background: linear-gradient(135deg, #00e6e6 0%, #232526 100%);
-	color: #fff;
-	border-radius: 10px;
-	box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-	padding: 22px 18px;
-	min-width: 220px;
-	flex: 1 1 220px;
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	font-size: 1.1em;
-}
-.card .lab-title {
-	font-size: 1.2em;
-	font-weight: bold;
-	margin-bottom: 8px;
-}
-.card .lab-info {
-	margin-bottom: 6px;
-}
-.card .lab-aulas {
-	font-size: 1.1em;
-	font-weight: 500;
-	color: #fff;
-	background: #232526;
-	padding: 4px 10px;
-	border-radius: 6px;
-	margin-top: 8px;
-}
-table {
-	width: 100%;
-	border-collapse: collapse;
-	margin-bottom: 20px;
-	overflow-x: auto;
-	display: block;
-}
-table th, table td {
-	border: 1px solid #ccc;
-	padding: 8px;
-	text-align: left;
-}
-table th {
-	background: #ecf0f1;
-}
-ul {
-	list-style: none;
-	padding: 0;
-}
-ul li {
-	background: #ecf0f1;
-	margin-bottom: 5px;
-	padding: 8px;
-	border-radius: 4px;
-}
-.flashes {
-	color: #e74c3c;
-	font-weight: bold;
-}
-form p {
-	margin-bottom: 10px;
-}
-input, select {
-	padding: 6px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	width: 100%;
-	max-width: 400px;
-	box-sizing: border-box;
-}
-input[type="checkbox"] {
-	width: auto;
-	max-width: none;
-	display: inline-block;
-}
-input[type="submit"] {
-	background: #00e6e6;
-	color: #232526;
-	border: none;
-	cursor: pointer;
-	padding: 8px 16px;
-	border-radius: 4px;
-	width: auto;
-	font-weight: bold;
-}
-input[type="submit"]:hover {
-	background: #232526;
-	color: #00e6e6;
+/* Geral */
+:root {
+  --primary: #3498db;
+  --secondary: #2ecc71;
+  --danger: #e74c3c;
+  --light: #ecf0f1;
+  --dark: #2c3e50;
+  --white: #ffffff;
+  --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 800px) {
-	.dashboard-cards { flex-direction: column; gap: 16px; }
-	.container { padding: 10px; margin: 10px; }
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background-color: var(--light);
+  color: var(--dark);
 }
-@media (max-width: 600px) {
-	.container { padding: 6px; margin: 6px; }
-	table, thead, tbody, th, td, tr { display: block; width: 100%; }
-	table th, table td { box-sizing: border-box; width: 100%; display: block; }
-	nav { flex-direction: column; align-items: flex-start; gap: 8px; }
-	nav a { margin-right: 0; }
-	h1, h2, h3 { font-size: 1.2em; }
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  color: var(--primary);
+}
+
+h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Topo e Menu */
+.home-wrapper {
+  background: var(--dark);
+  color: var(--white);
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.logo-center {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-center i {
+  color: var(--primary);
+}
+
+.menu-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.menu-card {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.menu-card:hover {
+  background-color: var(--primary);
+  transform: translateY(-5px);
+}
+
+.menu-card i {
+  font-size: 1.5rem;
+}
+
+/* Seção Dashboard */
+.section-dashboard {
+  padding: 2rem 0;
+}
+
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.card {
+  background-color: var(--white);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: var(--shadow);
+  border-left: 5px solid;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+  color: var(--dark);
+}
+
+.card .lab-info {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.card .lab-info i {
+    color: var(--primary);
+}
+
+/* Status dos Laboratórios */
+.card-livre {
+  border-left-color: var(--secondary);
+}
+
+.card-livre .lab-info strong {
+  color: var(--secondary);
+}
+
+.card-ocupado {
+  border-left-color: var(--danger);
+}
+
+.card-ocupado .lab-info strong {
+  color: var(--danger);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  h2 {
+    font-size: 2rem;
+  }
+  .logo-center {
+    font-size: 2rem;
+  }
+  .menu-cards {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .menu-card {
+    justify-content: center;
+  }
+}
+/* =================================
+   PÁGINAS INTERNAS (Agendamentos, etc.)
+   ================================= */
+
+/* Header Padrão */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: var(--dark);
+  color: var(--white);
+  box-shadow: var(--shadow);
+}
+
+.header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Navegação Interna */
+nav {
+  background-color: #34495e;
+  padding: 0.8rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+nav a {
+  color: var(--light);
+  font-weight: 500;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+nav a:hover {
+  color: var(--primary);
+}
+
+
+/* Formulários */
+form.card {
+  padding: 2rem;
+  background: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 1fr; /* Sempre uma coluna */
+  gap: 1rem;
+  border-left: none; /* Reset border from index */
+  max-width: 800px; /* Largura máxima */
+  margin: 2rem auto; /* Centraliza o form */
+}
+
+@media (min-width: 768px) {
+  form.card {
+    /* Não é mais necessário dividir em colunas */
+    gap: 1.2rem; /* Ajusta o espaçamento para telas maiores */
+  }
+  
+  /* O seletor abaixo agora só se aplica ao botão, para que ele ocupe a largura total */
+  form.card button {
+    grid-column: 1 / -1;
+  }
+}
+
+form label {
+  font-weight: bold;
+  color: var(--dark);
+  /* A margem negativa foi removida */
+}
+
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  box-sizing: border-box; /* Important for padding */
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Tabela */
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 3rem 0;
+}
+
+.table-container {
+    overflow-x: auto; /* Adiciona scroll horizontal em telas pequenas */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--white);
+  box-shadow: var(--shadow);
+  border-radius: 8px;
+  overflow: hidden; /* For rounded corners */
+  min-width: 800px; /* Ajuda a evitar quebra de layout em telas menores */
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+  color: var(--dark);
+}
+
+tr:hover {
+  background-color: #f9f9f9;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+/* Botões */
+.btn, button[type="submit"] {
+  cursor: pointer;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-width: 90px; /* Largura mínima para botões de ação */
+}
+
+.btn:hover, button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15); /* Sombra no hover */
+}
+
+.btn {
+  background-color: var(--primary);
+  color: var(--white);
+}
+.btn:hover {
+    background-color: #2980b9;
+}
+
+button[type="submit"] {
+  background-color: var(--secondary);
+  color: var(--white);
+}
+button[type="submit"]:hover {
+  background-color: #27ae60;
+}
+
+.btn-success {
+  background-color: var(--secondary);
+  color: white !important;
+}
+.btn-danger {
+  background-color: var(--danger);
+  color: white !important;
+}
+
+/* Célula de ações na tabela */
+td:has(> .btn) {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+/* Alertas e Status */
+.alert {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 5px;
+  border-left: 5px solid;
+}
+.alert.success {
+  background-color: #d4edda;
+  border-color: #28a745;
+  color: #155724;
+}
+.alert.error {
+  background-color: #f8d7da;
+  border-color: #dc3545;
+  color: #721c24;
+}
+
+/* Status na tabela */
+td span.alert {
+    padding: 0.4rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--white);
+    border: none;
+}
+td span.alert.success {
+  background-color: var(--secondary);
+}
+td span.alert.error { /* Pendente */
+  background-color: #f39c12; /* Amarelo/Laranja para pendente */
+}
+td span.alert:not(.success):not(.error) { /* Rejeitado */
+    background-color: #7f8c8d; /* Cinza */
+}
+
+/* =================================
+   PÁGINA DE LOGIN
+   ================================= */
+
+.form-login {
+  max-width: 450px; /* Largura máxima para o formulário de login */
+  margin: 2rem auto; /* Centraliza o formulário */
+  grid-template-columns: 1fr !important; /* Força uma única coluna */
+  gap: 1rem; /* Espaçamento entre os elementos */
+}
+
+.form-login h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.form-login label {
+  justify-self: start; /* Alinha labels à esquerda */
+  margin-bottom: -0.2rem;
+}
+
+.form-login input {
+    width: 100%;
+}
+
+.form-login button {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Estilo específico para grupo de checkbox */
+.form-group-checkbox {
+  grid-column: 1 / -1; /* Span across all columns */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: flex-start; /* Align to the left */
+  padding: 0.5rem 0; /* Add some padding */
+}
+
+.form-group-checkbox input[type="checkbox"] {
+  width: auto; /* Override default form input width */
+  margin-right: 5px; /* Space between checkbox and text */
 }

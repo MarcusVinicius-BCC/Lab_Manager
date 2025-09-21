@@ -1,50 +1,15 @@
 <?php
-session_start();
-require_once 'db.php';
-
-// Redireciona para o login se o usuário não estiver logado
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
-    exit;
+function load_data($file) {
+    $path = __DIR__ . "/data/" . $file;
+    if (!file_exists($path)) return [];
+    return json_decode(file_get_contents($path), true) ?: [];
 }
-?>
-<?php
-// Inclui o arquivo de conexão com o banco de dados
-require_once 'db.php';
-
-// Lógica para carregar os dados das tabelas
-try {
-    // Carrega dados da tabela laboratorios
-    $sql_labs = "SELECT * FROM laboratorios ORDER BY nome";
-    $stmt_labs = $conexao->prepare($sql_labs);
-    $stmt_labs->execute();
-    $labs = $stmt_labs->fetchAll(PDO::FETCH_ASSOC);
-
-    // Carrega dados da tabela monitores
-    $sql_monitores = "SELECT * FROM monitores ORDER BY nome";
-    $stmt_monitores = $conexao->prepare($sql_monitores);
-    $stmt_monitores->execute();
-    $monitores = $stmt_monitores->fetchAll(PDO::FETCH_ASSOC);
-
-    // Carrega dados da tabela aulas
-    $sql_aulas = "SELECT * FROM aulas ORDER BY dia_semana,turno";
-    $stmt_aulas = $conexao->prepare($sql_aulas);
-    $stmt_aulas->execute();
-    $aulas = $stmt_aulas->fetchAll(PDO::FETCH_ASSOC);
-
-    // Carrega dados da tabela professores
-    $sql_professores = "SELECT * FROM professores ORDER BY nome";
-    $stmt_professores = $conexao->prepare($sql_professores);
-    $stmt_professores->execute();
-    $professores = $stmt_professores->fetchAll(PDO::FETCH_ASSOC);
-
-} catch (PDOException $e) {
-    die("Erro ao carregar dados: " . $e->getMessage());
-}
-
-// Estes arrays não precisam de banco de dados, então permanecem os mesmos
-$turnos = ['manhã', 'tarde', 'noite'];
-$dias = ['segunda', 'terça', 'quarta', 'quinta', 'sexta'];
+$labs = load_data('laboratorios.json');
+$monitores = load_data('monitores.json');
+$aulas = load_data('aulas.json');
+$professores = load_data('professores.json');
+$turnos = ['manhã','tarde','noite'];
+$dias = ['segunda','terça','quarta','quinta','sexta'];
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
