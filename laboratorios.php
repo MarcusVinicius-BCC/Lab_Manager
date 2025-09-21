@@ -1,88 +1,121 @@
 <?php
 session_start();
-require_once 'db.php';
+require_once "db.php";
 
-// Redireciona para o login se o usuário não estiver logado
-if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');
+if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
+    die("Acesso negado.");
+}
+
+// === EXCLUIR ===
+if (isset($_GET['excluir'])) {
+    $id = intval($_GET['excluir']);
+    $sql = "DELETE FROM laboratorios WHERE id=?";
+    $stmt = $conexao->prepare($sql);
+    $stmt->execute([$id]);
+    header("Location: laboratorios.php");
     exit;
 }
-?>
-<?php
-// Inclui o arquivo de conexão com o banco de dados
-require_once 'db.php';
 
-// Lógica para lidar com o envio do formulário (método POST)
+// === SALVAR NOVO OU EDITAR ===
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nome = $_POST['nome'];
-    $numero = $_POST['numero'];
+    $nome = trim($_POST['nome']);
+    $numero = trim($_POST['numero']);
+    $localizacao = trim($_POST['localizacao']);
     $capacidade = intval($_POST['capacidade']);
-    // Converte o checkbox para 1 (marcado) ou 0 (não marcado)
     $projetor = isset($_POST['projetor']) ? 1 : 0;
 
-    // Comando SQL para inserir um novo laboratório
-    $sql = "INSERT INTO laboratorios (nome, numero, capacidade, projetor) VALUES (?, ?, ?, ?)";
-    
-    try {
+    if (!empty($_POST['id'])) {
+        $id = intval($_POST['id']);
+        $sql = "UPDATE laboratorios SET nome=?, numero=?, localizacao=?, capacidade=?, projetor=? WHERE id=?";
         $stmt = $conexao->prepare($sql);
-        $stmt->execute([$nome, $numero, $capacidade, $projetor]);
-        
-        // Redireciona para recarregar a página e mostrar o novo laboratório
-        header('Location: laboratorios.php');
-        exit;
-
-    } catch(PDOException $e) {
-        echo "Erro ao cadastrar laboratório: " . $e->getMessage();
+        $stmt->execute([$nome, $numero, $localizacao, $capacidade, $projetor, $id]);
+    } else {
+        $sql = "INSERT INTO laboratorios (nome, numero, localizacao, capacidade, projetor) VALUES (?, ?, ?, ?, ?)";
+        $stmt = $conexao->prepare($sql);
+        $stmt->execute([$nome, $numero, $localizacao, $capacidade, $projetor]);
     }
+    header("Location: laboratorios.php");
+    exit;
 }
 
-// Lógica para exibir os laboratórios já cadastrados
-// Comando SQL para selecionar todos os laboratórios do banco de dados
-$sql = "SELECT * FROM laboratorios ORDER BY nome";
-$stmt = $conexao->prepare($sql);
-$stmt->execute();
-$labs = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// === CARREGAR PARA EDIÇÃO ===
+$editando = false;
+$lab_edit = null;
+if (isset($_GET['editar'])) {
+    $editando = true;
+    $id = intval($_GET['editar']);
+    $stmt = $conexao->prepare("SELECT * FROM laboratorios WHERE id=?");
+    $stmt->execute([$id]);
+    $lab_edit = $stmt->fetch(PDO::FETCH_ASSOC);
+}
 
+// === LISTAR ===
+$labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <title>Laboratórios</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <title>Laboratórios</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="header">
-        <i class="fas fa-flask"></i> Laboratórios de Informática
+  <div class="header">
+    <h1><i class="fas fa-flask"></i> Laboratórios</h1>
+    <a href="index.php" class="btn">Voltar</a>
+  </div>
+  <div class="container">
+    <h2><?= $editando ? "Editar Laboratório" : "Cadastrar Laboratório" ?></h2>
+    <form method="POST" class="card">
+      <?php if ($editando): ?>
+        <input type="hidden" name="id" value="<?= $lab_edit['id'] ?>">
+      <?php endif; ?>
+
+      <label>Nome:</label>
+      <input type="text" name="nome" required value="<?= $lab_edit['nome'] ?? '' ?>">
+
+      <label>Número:</label>
+      <input type="text" name="numero" required value="<?= $lab_edit['numero'] ?? '' ?>">
+
+      <label>Localização:</label>
+      <input type="text" name="localizacao" value="<?= $lab_edit['localizacao'] ?? '' ?>">
+
+      <label>Capacidade:</label>
+      <input type="number" name="capacidade" required value="<?= $lab_edit['capacidade'] ?? '' ?>">
+
+      <label class="form-group-checkbox"><input type="checkbox" name="projetor" <?= !empty($lab_edit['projetor']) ? 'checked' : '' ?>> Possui Projetor</label>
+
+      <button type="submit" class="btn"><?= $editando ? "Atualizar" : "Cadastrar" ?></button>
+    </form>
+
+    <hr>
+    <h2>Lista de Laboratórios</h2>
+    <div class="table-container">
+      <table>
+        <tr>
+          <th>Nome</th>
+          <th>Número</th>
+          <th>Localização</th>
+          <th>Capacidade</th>
+          <th>Projetor</th>
+          <th>Ações</th>
+        </tr>
+        <?php foreach ($labs as $lab): ?>
+          <tr>
+            <td><?= htmlspecialchars($lab['nome']) ?></td>
+            <td><?= htmlspecialchars($lab['numero']) ?></td>
+            <td><?= htmlspecialchars($lab['localizacao'] ?? '') ?></td>
+            <td><?= htmlspecialchars($lab['capacidade']) ?></td>
+            <td><?= $lab['projetor'] ? "Sim" : "Não" ?></td>
+            <td>
+              <a href="?editar=<?= $lab['id'] ?>" class="btn">Editar</a>
+              <a href="?excluir=<?= $lab['id'] ?>" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este laboratório?')">Excluir</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      </table>
     </div>
-    <nav>
-        <a href="index.php"><i class="fas fa-chart-bar"></i> Dashboard</a>
-        <a href="laboratorios.php"><i class="fas fa-flask"></i> Laboratórios</a>
-        <a href="monitores.php"><i class="fas fa-user-astronaut"></i> Monitores</a>
-        <a href="professores.php"><i class="fas fa-chalkboard-teacher"></i> Professores</a>
-        <a href="aulas.php"><i class="fas fa-book"></i> Aulas</a>
-        <a href="horarios.php"><i class="fas fa-calendar-alt"></i> Horários</a>
-    </nav>
-    <div class="container">
-        <h2>Cadastrar Laboratório</h2>
-        <form method="POST">
-            <p>Nome: <input type="text" name="nome" required></p>
-            <p>Número: <input type="text" name="numero" required></p>
-            <p>Capacidade: <input type="number" name="capacidade" required></p>
-            <p><label><input type="checkbox" name="projetor"> Projetor</label></p>
-            <p><input type="submit" value="Cadastrar"></p>
-        </form>
-        <h3>Laboratórios Cadastrados</h3>
-        <div class="dashboard-cards">
-            <?php foreach ($labs as $lab): ?>
-            <div class="card">
-                <div class="lab-title"><i class="fas fa-flask"></i> <?= htmlspecialchars($lab['nome']) ?> (<?= htmlspecialchars($lab['numero']) ?>)</div>
-                <div class="lab-info"><i class="fas fa-users"></i> Capacidade: <?= htmlspecialchars($lab['capacidade']) ?></div>
-                <div class="lab-info"><i class="fas fa-video"></i> Projetor: <?= !empty($lab['projetor']) ? 'Sim' : 'Não' ?></div>
-            </div>
-            <?php endforeach; ?>
-        </div>
-    </div>
+  </div>
 </body>
 </html>

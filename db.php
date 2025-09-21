@@ -1,7 +1,7 @@
 <?php
 $host = 'localhost';
 $usuario = 'root';
-$senha = '123456';
+$senha = 'mv16082005';
 $banco = 'lab_manager';
 
 try {
