@@ -11,4 +11,3 @@ try {
    // Em caso de erro, interrompe o script e exibe a mensagem
    die("Erro na conexão: " . $e->getMessage());
 }
-?>

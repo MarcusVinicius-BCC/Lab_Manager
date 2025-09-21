@@ -111,6 +111,3 @@ $dias = ['segunda','terça','quarta','quinta','sexta'];
     }
 </body>
 </html>
-
-
-
