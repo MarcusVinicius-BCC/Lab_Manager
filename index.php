@@ -71,6 +71,7 @@ foreach ($aulas_hoje as $aula) {
           <a href="monitores.php" class="menu-card"><i class="fas fa-user-astronaut"></i><h3>Monitores</h3></a>
           <a href="professores.php" class="menu-card"><i class="fas fa-chalkboard-teacher"></i><h3>Professores</h3></a>
           <a href="aulas.php" class="menu-card"><i class="fas fa-book"></i><h3>Aulas</h3></a>
+          <a href="horarios.php" class="menu-card"><i class="fas fa-calendar-alt"></i><h3>Horários</h3></a>
         <?php endif; ?>
         <a href="logout.php" class="menu-card"><i class="fas fa-sign-out-alt"></i><h3>Sair</h3></a>
       <?php else: ?>
