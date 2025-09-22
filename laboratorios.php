@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('America/Sao_Paulo');
 require_once "db.php";
 
 if (!isset($_SESSION['user_role']) || $_SESSION['user_role'] !== 'admin') {
@@ -49,6 +50,19 @@ if (isset($_GET['editar'])) {
     $lab_edit = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+// Get current date and time for status check
+$current_date = date('Y-m-d');
+$current_hour = date('H');
+
+$current_turno = '';
+if ($current_hour >= 6 && $current_hour < 12) {
+    $current_turno = 'manhã';
+} elseif ($current_hour >= 12 && $current_hour < 18) {
+    $current_turno = 'tarde';
+} elseif (($current_hour >= 18 && $current_hour <= 23) || ($current_hour >= 0 && $current_hour < 6)) {
+    $current_turno = 'noite';
+}
+
 // === LISTAR ===
 $labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -91,6 +105,9 @@ $labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(
 
     <hr>
     <h2>Lista de Laboratórios</h2>
+    <p><strong>Data Atual:</strong> <?= $current_date ?></p>
+    <p><strong>Hora Atual:</strong> <?= $current_hour ?>h</p>
+    <p><strong>Turno Atual:</strong> <?= $current_turno ?></p>
     <div class="table-container">
       <table>
         <tr>
@@ -99,15 +116,32 @@ $labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(
           <th>Localização</th>
           <th>Capacidade</th>
           <th>Projetor</th>
+          <th>Status</th>
           <th>Ações</th>
         </tr>
-        <?php foreach ($labs as $lab): ?>
+        <?php foreach ($labs as $lab):
+            $is_occupied = false;
+            if (!empty($current_turno)) {
+                $stmt_check_agendamento = $conexao->prepare(
+                    "SELECT COUNT(*) FROM agendamentos WHERE laboratorio_id = ? AND dia = ? AND turno = ? AND status = 'aprovado'"
+                );
+                $stmt_check_agendamento->execute([$lab['id'], $current_date, $current_turno]);
+                $is_occupied = ($stmt_check_agendamento->fetchColumn() > 0);
+            }
+        ?>
           <tr>
             <td><?= htmlspecialchars($lab['nome']) ?></td>
             <td><?= htmlspecialchars($lab['numero']) ?></td>
             <td><?= htmlspecialchars($lab['localizacao'] ?? '') ?></td>
             <td><?= htmlspecialchars($lab['capacidade']) ?></td>
             <td><?= $lab['projetor'] ? "Sim" : "Não" ?></td>
+            <td>
+                <?php if ($is_occupied): ?>
+                    <span style="color: red; font-weight: bold;">Ocupado com Evento</span>
+                <?php else: ?>
+                    <span style="color: green;">Disponível</span>
+                <?php endif; ?>
+            </td>
             <td>
               <a href="?editar=<?= $lab['id'] ?>" class="btn">Editar</a>
               <a href="?excluir=<?= $lab['id'] ?>" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este laboratório?')">Excluir</a>

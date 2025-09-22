@@ -14,20 +14,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['agendar']) && $user_r
     $matricula  = trim($_POST['matricula']);
     $email      = trim($_POST['email']);
     $telefone   = trim($_POST['telefone']);
-    $dia        = $_POST['dia'];
+    $dia_raw    = $_POST['dia'];
+    $date_obj   = DateTime::createFromFormat('d/m/Y', $dia_raw);
+    if ($date_obj) {
+        $dia = $date_obj->format('Y-m-d');
+    } else {
+        $dia = null; // Or handle error appropriately
+        $mensagem = ["tipo" => "error", "texto" => "Formato de data inválido. Use DD/MM/AAAA."];
+    }
     $turno      = $_POST['turno'];
     $lab_id     = intval($_POST['laboratorio_id']);
     $motivo     = trim($_POST['motivo']);
 
-    try {
-        $sql = "INSERT INTO agendamentos (nome, matricula, email, telefone, laboratorio_id, dia, turno, motivo, status)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pendente')";
-        $stmt = $conexao->prepare($sql);
-        $stmt->execute([$nome, $matricula, $email, $telefone, $lab_id, $dia, $turno, $motivo]);
+    // If date is invalid, set error and stop processing
+    if ($dia === null) {
+        // $mensagem is already set in the date parsing block
+        // No further processing needed for this request
+    } else {
+        // Check for existing approved appointments for this lab, day, and turno
+        $sql_check_conflict = "SELECT COUNT(*) FROM agendamentos WHERE laboratorio_id = ? AND dia = ? AND turno = ? AND status IN ('aprovado', 'pendente')";
+        $stmt_check_conflict = $conexao->prepare($sql_check_conflict);
+        $stmt_check_conflict->execute([$lab_id, $dia, $turno]);
+        $conflict_count = $stmt_check_conflict->fetchColumn();
 
-        $mensagem = ["tipo" => "success", "texto" => "Solicitação enviada com sucesso!"];
-    } catch (PDOException $e) {
-        $mensagem = ["tipo" => "error", "texto" => "Erro ao solicitar: " . $e->getMessage()];
+        if ($conflict_count > 0) {
+            $mensagem = ["tipo" => "error", "texto" => "Laboratório ocupado com evento para o dia e turno selecionados."];
+        } else {
+            // Original try-catch block for INSERT
+            try {
+                $sql = "INSERT INTO agendamentos (nome, matricula, email, telefone, laboratorio_id, dia, turno, motivo, status)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'pendente')";
+                $stmt = $conexao->prepare($sql);
+                $stmt->execute([$nome, $matricula, $email, $telefone, $lab_id, $dia, $turno, $motivo]);
+
+                $mensagem = ["tipo" => "success", "texto" => "Solicitação enviada com sucesso!"];
+            } catch (PDOException $e) {
+                $mensagem = ["tipo" => "error", "texto" => "Erro ao solicitar: " . $e->getMessage()];
+            }
+        }
     }
 }
 
@@ -85,7 +109,7 @@ $labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(
 
     <?php if ($user_role !== 'admin'): ?>
       <!-- Formulário Público -->
-      <h2><i class="fas fa-calendar-plus"></i> Solicitar Agendamento</h2>
+      <h2>Solicitar Agendamento</h2>
 <form method="POST" class="card">
   <label for="nome">Nome Completo</label>
   <input type="text" id="nome" name="nome" required>
@@ -100,7 +124,7 @@ $labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(
   <input type="text" id="telefone" name="telefone">
 
   <label for="dia">Dia</label>
-  <input type="date" id="dia" name="dia" required>
+  <input type="text" id="dia" name="dia" required placeholder="DD/MM/AAAA">
 
   <label for="turno">Turno</label>
   <select id="turno" name="turno" required>

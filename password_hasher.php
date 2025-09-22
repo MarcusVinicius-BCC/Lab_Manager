@@ -33,7 +33,7 @@ $csrf_token = $_SESSION['csrf_token'];
         <a href="monitores.php"><i class="fas fa-user-astronaut"></i> Monitores</a>
         <a href="professores.php"><i class="fas fa-chalkboard-teacher"></i> Professores</a>
         <a href="aulas.php"><i class="fas fa-book"></i> Aulas</a>
-        <a href="horarios.php"><i class="fas fa-calendar-alt"></i> Horários</a>
+        
         <a href="cadastrar_usuario.php"><i class="fas fa-user-plus"></i> Novo Usuário</a>
         <a href="logout.php"><i class="fas fa-sign-out-alt"></i> Sair</a>
     </nav>
