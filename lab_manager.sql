@@ -1,9 +1,9 @@
-Dump-- phpMyAdmin SQL Dump
+-- phpMyAdmin SQL Dump
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 21/09/2025 às 20:32
+-- Tempo de geração: 22/09/2025 às 03:53
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -41,6 +41,15 @@ CREATE TABLE `agendamentos` (
   `criado_em` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
+--
+-- Despejando dados para a tabela `agendamentos`
+--
+
+INSERT INTO `agendamentos` (`id`, `nome`, `matricula`, `email`, `telefone`, `laboratorio_id`, `dia`, `turno`, `motivo`, `status`, `criado_em`) VALUES
+(9, 'xxxxxxxxxxx', 'xxxxxxxxxxxxxx', 'carlosandrebr.6@gmail.com', 'xxxxxxxxxxxxxxxxxx', 8, '2025-09-21', 'noite', 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx', 'aprovado', '2025-09-22 00:09:50'),
+(10, 'xxxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'mv16082005@gmail.com', 'xxxxxxxxxxxxxxxxxxxx', 6, '2025-09-21', 'noite', 'xxxxxxxxxxxxxxxxx', 'aprovado', '2025-09-22 00:20:04'),
+(11, 'xxxxxxxxxx', 'xxxxxxxxxxxx', 'abas@gmail.com', 'xxxxxxxxxxxxxxxxx', 7, '2025-09-21', 'noite', 'xxxxxxxxxxxxxxxxxxxxx', 'aprovado', '2025-09-22 00:25:52');
+
 -- --------------------------------------------------------
 
 --
@@ -65,7 +74,12 @@ CREATE TABLE `aulas` (
 --
 
 INSERT INTO `aulas` (`id`, `disciplina`, `professor_id`, `laboratorio_id`, `turno`, `dia_semana`, `semestre`, `data_inicio`, `data_fim`, `status`) VALUES
-(1, 'arquitetura', NULL, NULL, 'manhã', 'segunda', NULL, NULL, NULL, 'ativa');
+(4, 'SSIN0047 - VISÃO COMPUTACIONAL', 11, 7, 'tarde', 'segunda', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(5, 'SBCC0048 - TÓPICOS AVANÇADOS EM CIÊNCIA DE DADOS', 10, 8, 'manhã', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(6, 'PC010037 - PROGRAMAÇÃO PARA WEB', 9, 8, 'noite', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(7, 'PC010007 - LABORATÓRIO DE PROGRAMAÇÃO', 7, 8, 'tarde', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(8, 'SBCC0024 - ARQUITETURA E DESEMPENHO DE BANCO DE DADOS', 8, 6, 'manhã', 'quinta', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(9, 'TESTE', 10, 7, 'manhã', 'segunda', '2025.2', '2025-08-08', '2025-12-17', 'ativa');
 
 -- --------------------------------------------------------
 
@@ -79,7 +93,7 @@ CREATE TABLE `horarios` (
   `dia_semana` varchar(20) DEFAULT NULL,
   `horario_inicio` time DEFAULT NULL,
   `horario_fim` time DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -94,14 +108,16 @@ CREATE TABLE `laboratorios` (
   `numero` varchar(255) NOT NULL,
   `projetor` tinyint(1) NOT NULL DEFAULT 0,
   `localizacao` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Despejando dados para a tabela `laboratorios`
 --
 
 INSERT INTO `laboratorios` (`id`, `nome`, `capacidade`, `numero`, `projetor`, `localizacao`) VALUES
-(5, 'LABINOVA', 20, '221', 0, 'BMT I');
+(6, 'LABINOVA', 25, '221', 0, 'BMT I 2º piso'),
+(7, 'LAB', 35, '219', 0, 'BMT I 2º piso'),
+(8, 'LABORATORIO DE ALGORITMOS', 35, '37', 0, 'CENTRO DE BSI');
 
 -- --------------------------------------------------------
 
@@ -145,7 +161,15 @@ CREATE TABLE `monitores` (
 INSERT INTO `monitores` (`id`, `nome`, `matricula`, `turno`, `laboratorio_id`, `email`, `telefone`) VALUES
 (1, 'Fernando', '20230202', 'manhã', 1, 'fernando@email.com', NULL),
 (2, 'valter', '23465', 'tarde', 2, 'valter@email.com', NULL),
-(4, 'RAISSA', '', 'manhã', 5, 'maa@gmail.com', '93 922334773');
+(6, 'CARLOS ANDRE BARROSO RABELO', '', 'tarde', 6, 'carlosandrebr.6@gmail.com', '93 9194-3879'),
+(7, 'ENDRIO AGASSI BERNARDES DE ALMEIDA', '', 'tarde', 7, 'endrio.ufopa@gmail.com', '93 8104-9871'),
+(8, 'RAYSSA DE SOUSA SIMOES', '', 'manhã', 6, 'rayssasimoes27@gmail.com', '93 9237-9203'),
+(9, 'ANA CAROLINE MONTEIRO VIEIRA PINTO', '', 'tarde', 8, 'anacvieira1415@gmail.com', '93 9124-9533'),
+(10, 'JONAS ALVES DA SILVA FILHO', '', 'noite', 6, 'jonasalvezmararu@gmail.com', '93 8423-0299'),
+(11, 'JOSE WALTER LOBATO MOURAO JUNIOR', '', 'noite', 7, 'josecastro00k1@gmail.com', '93 8416-8910'),
+(12, 'JOAO PAULO SANTOS BEMBE', '', 'noite', 8, 'jpbembe@gmail.com', '93 000000000'),
+(13, 'ISAAC CORREA DE OLIVEIRA', '', 'manhã', 8, 'correa.isaac250@gmail.com', '93 9231-5016'),
+(14, 'FERNANDO ABREU DE SOUSA', '', 'manhã', 7, 'fernando.compsci@gmail.com', '93 8815-9444');
 
 -- --------------------------------------------------------
 
@@ -162,6 +186,18 @@ CREATE TABLE `professores` (
   `area_conhecimento` varchar(100) DEFAULT NULL,
   `status` enum('ativo','inativo') NOT NULL DEFAULT 'ativo'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+
+--
+-- Despejando dados para a tabela `professores`
+--
+
+INSERT INTO `professores` (`id`, `nome`, `email`, `telefone`, `matricula`, `area_conhecimento`, `status`) VALUES
+(6, 'MARCELINO SILVA DA SILVA', 'marcelino.ss@ufopa.edu.br', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
+(7, 'GUILHERME AUGUSTO BARROS CONDE', 'guilherme.conde@ufopa.edu.br', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
+(8, 'SOCORRO VANIA LOURENCO ALVES', 'socorro.alves@ufopa.edu.br', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
+(9, 'RENNAN JOSE MAIA DA SILVA', 'rennanmaia@gmail.com', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
+(10, 'BRUNO ALMEIDA DA SILVA', 'brunostm@gmail.com', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
+(11, 'MARCIO JOSE MOUTINHO DA PONTE', 'mjmponte@gmail.com', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo');
 
 -- --------------------------------------------------------
 
@@ -251,13 +287,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de tabela `agendamentos`
 --
 ALTER TABLE `agendamentos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `aulas`
 --
 ALTER TABLE `aulas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de tabela `horarios`
@@ -269,25 +305,25 @@ ALTER TABLE `horarios`
 -- AUTO_INCREMENT de tabela `laboratorios`
 --
 ALTER TABLE `laboratorios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de tabela `matriculas_autorizadas`
 --
 ALTER TABLE `matriculas_autorizadas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `monitores`
 --
 ALTER TABLE `monitores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de tabela `professores`
 --
 ALTER TABLE `professores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
