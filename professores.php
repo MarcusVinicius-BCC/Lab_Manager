@@ -63,7 +63,10 @@ $profs = $conexao->query("SELECT * FROM professores ORDER BY nome")->fetchAll(PD
 </head>
 <body>
   <div class="header">
-    <h1><i class="fas fa-chalkboard-teacher"></i> Professores</h1>
+    <div style="display: flex; align-items: center; gap: 20px;">
+        <a href="index.php"><img src="img/logo.png" alt="Logo" style="height: 50px;"></a>
+        <h1 style="margin: 0;">Professores</h1>
+    </div>
     <a href="index.php" class="btn">Voltar</a>
   </div>
   <div class="container">
