@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 session_start();
 require_once 'db.php';
@@ -252,5 +252,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </body>
 
->>>>>>> a2a08d6b544b9fcd45055b686d5fac820a3fad02
+
 </html>

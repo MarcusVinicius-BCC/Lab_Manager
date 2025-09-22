@@ -62,6 +62,9 @@ Siga os passos abaixo para configurar o projeto em seu ambiente:
 ### Acessando o Sistema
 
 Após a instalação, você pode acessar o sistema através do seu navegador, digitando o endereço configurado para o seu servidor web (ex: `http://localhost/lab_manager_php`).
+### Usuário Administrador já cadastrado
+   login: admin
+   senha: admin
 
 ### Registro de Usuário Administrador
 

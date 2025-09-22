@@ -26,10 +26,10 @@ if ($hora_atual >= 7 && $hora_atual < 12) {
     $turno_atual = "manhã";
 } elseif ($hora_atual >= 12 && $hora_atual < 18) {
     $turno_atual = "tarde";
-} elseif ($hora_atual >= 18 && $hora_atual < 22) {
+} elseif (($hora_atual >= 18 && $hora_atual <= 23) || ($hora_atual >= 0 && $hora_atual < 7)) {
     $turno_atual = "noite";
 } else {
-    $turno_atual = "livre";
+    $turno_atual = "indefinido"; // Should not happen with correct ranges
 }
 
 // Carregar dados
@@ -40,10 +40,27 @@ $stmt = $conexao->prepare("SELECT a.laboratorio_id, a.disciplina, p.nome AS prof
 $stmt->execute([$dia_semana_atual, $turno_atual]);
 $aulas_hoje = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// Fetch current approved appointments
+$stmt_agendamentos = $conexao->prepare(
+    "SELECT laboratorio_id, motivo FROM agendamentos WHERE dia = CURDATE() AND turno = ? AND status = 'aprovado'"
+);
+$stmt_agendamentos->execute([$turno_atual]);
+$agendamentos_hoje = $stmt_agendamentos->fetchAll(PDO::FETCH_ASSOC);
+
 $labs_ocupados = [];
 foreach ($aulas_hoje as $aula) {
     $labs_ocupados[$aula["laboratorio_id"]] = [
-        "disciplina" => $aula["disciplina"], "professor_nome" => $aula["professor_nome"]
+        "tipo" => "aula",
+        "disciplina" => $aula["disciplina"], 
+        "professor_nome" => $aula["professor_nome"]
+    ];
+}
+
+foreach ($agendamentos_hoje as $agendamento) {
+    // Agendamentos take precedence or add to existing info
+    $labs_ocupados[$agendamento["laboratorio_id"]] = [
+        "tipo" => "agendamento",
+        "motivo" => $agendamento["motivo"]
     ];
 }
 ?>
@@ -71,7 +88,6 @@ foreach ($aulas_hoje as $aula) {
           <a href="monitores.php" class="menu-card"><i class="fas fa-user-astronaut"></i><h3>Monitores</h3></a>
           <a href="professores.php" class="menu-card"><i class="fas fa-chalkboard-teacher"></i><h3>Professores</h3></a>
           <a href="aulas.php" class="menu-card"><i class="fas fa-book"></i><h3>Aulas</h3></a>
-          <a href="horarios.php" class="menu-card"><i class="fas fa-calendar-alt"></i><h3>Horários</h3></a>
         <?php endif; ?>
         <a href="logout.php" class="menu-card"><i class="fas fa-sign-out-alt"></i><h3>Sair</h3></a>
       <?php else: ?>
@@ -91,10 +107,21 @@ foreach ($aulas_hoje as $aula) {
       ?>
       <div class="card <?= $status_class ?>">
         <h3><i class="fas fa-flask"></i> <?= htmlspecialchars($lab['nome']) ?> (<?= $lab['numero'] ?>)</h3>
-        <div class="lab-info"><strong>Status:</strong> <?= $status === "livre" ? "Livre" : "Ocupado" ?></div>
+        <div class="lab-info"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($lab['localizacao']) ?></div>
+        <div class="lab-info"><strong>Status:</strong>
+            <?php if ($status === "ocupado"): ?>
+                <span style="color: red; font-weight: bold;">Ocupado com Evento</span>
+            <?php else: ?>
+                <span style="color: green;">Livre</span>
+            <?php endif; ?>
+        </div>
         <?php if ($status === "ocupado"): ?>
-          <div class="lab-info"><i class="fas fa-book"></i> <?= htmlspecialchars($info['disciplina']) ?></div>
-          <div class="lab-info"><i class="fas fa-chalkboard-teacher"></i> <?= htmlspecialchars($info['professor_nome']) ?></div>
+            <?php if ($info['tipo'] === 'aula'): ?>
+                <div class="lab-info"><i class="fas fa-book"></i> <?= htmlspecialchars($info['disciplina']) ?></div>
+                <div class="lab-info"><i class="fas fa-chalkboard-teacher"></i> <?= htmlspecialchars($info['professor_nome']) ?></div>
+            <?php elseif ($info['tipo'] === 'agendamento'): ?>
+                <div class="lab-info"><i class="fas fa-calendar-alt"></i> <?= htmlspecialchars($info['motivo']) ?></div>
+            <?php endif; ?>
         <?php endif; ?>
       </div>
       <?php endforeach; ?>

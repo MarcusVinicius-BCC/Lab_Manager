@@ -122,7 +122,7 @@ $labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(
       <select name="dia_semana" required>
         <option value="">Selecione...</option>
         <?php 
-        $dias = ["segunda","terça","quarta","quinta","sexta"];
+        $dias = ["segunda","terça","quarta","quinta","sexta","sábado"];
         foreach ($dias as $d): 
           $sel = (($aula_edit['dia_semana'] ?? '') === $d) ? "selected" : ""; ?>
           <option value="<?= $d ?>" <?= $sel ?>><?= ucfirst($d) ?></option>
