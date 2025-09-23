@@ -1,98 +1,151 @@
-# Lab_Manager
+# Lab Manager PHP
 
-Um sistema web para gerenciamento de recursos de laboratórios, aulas, professores, monitores e agendamentos. Desenvolvido em PHP, oferece um dashboard para visualização em tempo real do status dos laboratórios e ferramentas administrativas para a gestão completa dos recursos.
+![Logo do Projeto](img/logo.png)
+
+## Descrição do Projeto
+
+O Lab Manager PHP é um sistema web desenvolvido em PHP para gerenciar laboratórios, agendamentos, aulas, professores e monitores. Ele oferece uma interface intuitiva para visualizar o status dos laboratórios, agendar horários e gerenciar informações relacionadas ao ambiente acadêmico. O sistema foi projetado com uma abordagem mobile-first, garantindo uma experiência de usuário otimizada em diversos dispositivos.
 
 ## Funcionalidades
 
-*   **Autenticação de Usuários:** Login, Logout e Registro para usuários autorizados.
-*   **Controle de Acesso Baseado em Papéis (RBAC):** Diferenciação entre usuários administradores e comuns.
-*   **Dashboard:** Exibe o status em tempo real dos laboratórios (ocupado/livre) com base no dia e turno atuais.
-*   **Gerenciamento de Agendamentos:** Permite a criação e gestão de agendamentos de laboratórios.
-*   **Gerenciamento de Laboratórios:** Cadastro e administração dos laboratórios disponíveis.
-*   **Gerenciamento de Monitores:** Cadastro e administração dos monitores.
-*   **Gerenciamento de Professores:** Cadastro e administração dos professores.
-*   **Gerenciamento de Aulas:** Cadastro e administração das aulas, incluindo arquivamento automático de aulas passadas.
+*   **Gestão de Laboratórios:** Cadastro e visualização do status (livre/ocupado) dos laboratórios.
+*   **Agendamento de Horários:** Permite agendar laboratórios para aulas e outros eventos.
+*   **Gestão de Aulas:** Cadastro e acompanhamento das aulas que utilizam os laboratórios.
+*   **Gestão de Professores:** Cadastro e informações de contato dos professores.
+*   **Gestão de Monitores:** Cadastro e informações dos monitores.
+*   **Calendário Interativo:** Visualização de agendamentos e aulas em um calendário.
+*   **Autenticação de Usuários:** Sistema de login e registro para acesso seguro.
+*   **Responsividade:** Interface adaptável a diferentes tamanhos de tela (desktops, tablets e smartphones) com design mobile-first.
+*   **Regimento Interno:** Página dedicada a exibir o regimento ou regras de uso dos laboratórios.
 
 ## Tecnologias Utilizadas
 
 *   **Backend:** PHP
-*   **Banco de Dados:** MySQL / MariaDB (utilizando PDO para conexão)
-*   **Frontend:** HTML5, CSS3
-*   **Ícones:** Font Awesome
+*   **Banco de Dados:** MySQL (o arquivo `lab_manager.sql` contém a estrutura do banco de dados)
+*   **Frontend:** HTML5, CSS3 (com design responsivo mobile-first), JavaScript (se houver, para interatividade)
+*   **Estilização:** Fontes Google Fonts (Oswald, Poppins)
 
-## Pré-requisitos
+## Estrutura do Projeto
 
-Para executar este projeto, você precisará ter instalado:
+```
+lab_manager_php/
+├── .gitignore
+├── agenda.php             # Página para visualização e gestão da agenda/calendário
+├── agendamentos.php       # Página para gestão de agendamentos
+├── aulas.php              # Página para gestão de aulas
+├── db.php                 # Configuração de conexão com o banco de dados
+├── index.php              # Página inicial/Dashboard
+├── informacoes.php        # Página com informações sobre os laboratórios (fotos, etc.)
+├── lab_manager.sql        # Script SQL para criação do banco de dados e tabelas
+├── laboratorios.php       # Página para gestão de laboratórios
+├── login.php              # Página de login
+├── logout.php             # Script para deslogar o usuário
+├── monitores.php          # Página para gestão de monitores
+├── password_hasher.php    # Utilitário para hash de senhas
+├── professores.php        # Página para gestão de professores
+├── README.md              # Este arquivo README
+├── regimento.php          # Página com o regimento interno
+├── registrar.php          # Página de registro de novos usuários
+├── .git/...               # Diretório de controle de versão Git
+├── css/
+│   └── style.css          # Folha de estilos principal (com responsividade mobile-first)
+└── img/
+    ├── Lab_Dev.png
+    ├── Lab_Inova.png
+    ├── Lab_Prog.png
+    ├── LabDev.png
+    ├── LabInova.png
+    ├── LabProg.png
+    ├── logo.png             # Logo do projeto
+    └── ...                  # Outras imagens
+```
 
-*   Um servidor web (Apache, Nginx, etc.) com **PHP 7.4+**.
-*   Um servidor de banco de dados **MySQL** ou **MariaDB**.
-*   Ferramentas como **XAMPP**, **WAMP** ou **MAMP** são recomendadas para um ambiente de desenvolvimento local.
+## Como Instalar e Rodar
 
-## Instalação e Configuração
+Para configurar e executar o projeto em seu ambiente local, siga os passos abaixo:
 
-Siga os passos abaixo para configurar o projeto em seu ambiente:
+### Pré-requisitos
 
-1.  **Clone o Repositório:**
-    ```bash
-    git clone <https://github.com/MarcusVinicius-BCC/Lab_Manager.git>
-    cd lab_manager_php
+Certifique-se de ter os seguintes softwares instalados:
+
+*   **Servidor Web:** Apache (geralmente incluído em pacotes como XAMPP, WAMP, MAMP)
+*   **Interpretador PHP:** PHP 7.x ou superior
+*   **Servidor de Banco de Dados:** MySQL
+
+### 1. Clonar o Repositório
+
+```bash
+git clone <URL_DO_SEU_REPOSITORIO>
+cd lab_manager_php
+```
+
+### 2. Configuração do Banco de Dados
+
+1.  Acesse o seu gerenciador de banco de dados (ex: phpMyAdmin, MySQL Workbench).
+2.  Crie um novo banco de dados com o nome `lab_manager` (ou o nome que preferir).
+3.  Importe o arquivo `lab_manager.sql` para o banco de dados recém-criado. Este arquivo contém a estrutura das tabelas e dados iniciais.
+4.  Abra o arquivo `db.php` e configure as credenciais do seu banco de dados:
+
+    ```php
+    <?php
+    $servername = "localhost";
+    $username = "seu_usuario_mysql"; // Ex: root
+    $password = "sua_senha_mysql";   // Ex: (vazio) ou sua_senha
+    $dbname = "lab_manager";
+
+    // Cria conexão
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Verifica conexão
+    if ($conn->connect_error) {
+        die("Conexão falhou: " . $conn->connect_error);
+    }
+    ?>
     ```
 
+### 3. Configurar o Servidor Web
 
-2.  **Configurar o Banco de Dados e Variáveis de Ambiente:**
-    *   Crie um banco de dados chamado `lab_manager` no seu servidor MySQL/MariaDB.
-    *   Importe o arquivo `lab_manager.sql` para este banco de dados. Este arquivo contém a estrutura das tabelas e dados iniciais.
-    *   **Configurar o arquivo `.env`:**
-        Para gerenciar as credenciais do banco de dados de forma segura e flexível, este projeto utiliza um arquivo `.env`.
-        Crie um arquivo chamado `.env` na raiz do projeto (no mesmo nível de `index.php` e `db.php`).
-        Adicione as seguintes linhas, substituindo os valores pelos seus dados de conexão com o banco de dados:
-        ```
-        DB_HOST=localhost
-        DB_USER=root
-        DB_PASS=mv16082005
-        DB_NAME=lab_manager
-        ```
-        *(Altere `DB_HOST`, `DB_USER`, `DB_PASS`, `DB_NAME` conforme suas configurações. `DB_PASS` deve ser a senha do seu usuário `root` ou do usuário que você configurou para o banco de dados `lab_manager`)*
-        **Importante:** O arquivo `.env` não deve ser versionado (ele já está no `.gitignore`). Certifique-se de que cada desenvolvedor crie seu próprio arquivo `.env` localmente.
+1.  Mova a pasta `lab_manager_php` para o diretório `htdocs` do seu servidor Apache (ou o diretório raiz do seu servidor web).
+2.  Certifique-se de que o Apache e o MySQL estejam em execução.
 
-3.  **Configurar o Servidor Web:**
-    *   Certifique-se de que seu servidor web esteja configurado para apontar para a pasta `lab_manager_php` como o diretório raiz do seu projeto.
+### 4. Acessar o Sistema
 
-## Como Usar
+Abra seu navegador e acesse:
 
-### Acessando o Sistema
+```
+http://localhost/lab_manager_php
+```
 
-Após a instalação, você pode acessar o sistema através do seu navegador, digitando o endereço configurado para o seu servidor web (ex: `http://localhost/lab_manager_php`).
-### Usuário Administrador já cadastrado
- * login: admin
- * senha: admin
+Ou o caminho correspondente à sua configuração.
 
-### Registro de Usuário Administrador
+## Uso
 
-Para cadastrar um novo usuário com permissões de administrador, siga estes dois passos:
+Após a instalação, você pode:
 
-1.  **Autorizar a Matrícula no Banco de Dados:**
-    Antes de registrar, a matrícula do novo usuário deve ser adicionada à tabela `matriculas_autorizadas`. Execute o seguinte comando SQL no seu gerenciador de banco de dados (ex: phpMyAdmin):
-    ```sql
-    INSERT INTO matriculas_autorizadas (matricula, usada) VALUES ('SUA_NOVA_MATRICULA', 0);
-    ```
-    Substitua `'SUA_NOVA_MATRICULA'` pela matrícula que você deseja autorizar.
+1.  **Registrar** um novo usuário através da página `registrar.php`.
+2.  **Fazer Login** com suas credenciais na página `login.php`.
+3.  Navegar pelo **Dashboard** (`index.php`) para ver o status dos laboratórios.
+4.  Utilizar o **Menu de Navegação** para acessar as diferentes seções: Agendamentos, Aulas, Laboratórios, Professores, Monitores, Agenda e Informações.
+5.  Consultar o **Regimento** na página `regimento.php`.
 
-2.  **Registrar o Usuário via Formulário:**
-    Acesse a página de registro do sistema (`http://localhost/lab_manager_php/registrar.php`) e preencha o formulário com os dados do novo usuário, utilizando a mesma matrícula que você acabou de autorizar no banco de dados. O sistema irá automaticamente "hashear" a senha e atribuir a função de administrador.
+## Responsividade (Mobile-First)
 
-### Navegação
+O projeto foi desenvolvido seguindo o princípio de *Mobile-First Design*. Isso significa que a estilização foi iniciada e otimizada para telas de dispositivos móveis, e então, através de *media queries* CSS (`@media (min-width: 768px)`), os estilos são progressivamente aprimorados para tablets e desktops. Isso garante uma experiência de usuário consistente e agradável em qualquer tamanho de tela.
 
-*   **Dashboard:** Visualize o status atual dos laboratórios.
-*   **Agendamento:** Realize novos agendamentos.
-*   **Área Administrativa (apenas para admins):** Acesse os links no menu para gerenciar Laboratórios, Monitores, Professores e Aulas.
+## Contribuição
 
-## Estrutura do Banco de Dados (Tabelas Principais)
+Contribuições são bem-vindas! Se você deseja contribuir com o projeto, siga os passos:
 
-*   `usuarios`: Armazena informações dos usuários, incluindo nome de usuário, hash da senha e papel (`admin`, `comum`).
-*   `matriculas_autorizadas`: Lista de matrículas que podem ser usadas para registro no sistema.
-*   `laboratorios`: Detalhes dos laboratórios (nome, capacidade, número, etc.).
-*   `aulas`: Informações sobre as aulas (disciplina, professor, laboratório, turno, etc.).
-*   `agendamentos`: Registros de agendamentos de laboratórios.
-*   `professores`: Cadastro de professores.
-*   `monitores`: Cadastro de monitores.
+1.  Faça um fork do repositório.
+2.  Crie uma nova branch (`git checkout -b feature/sua-feature`).
+3.  Faça suas alterações e commit (`git commit -m 'Adiciona nova feature'`).
+4.  Envie para a branch original (`git push origin feature/sua-feature`).
+5.  Abra um Pull Request.
+
+## Licença
+
+Este projeto está licenciado sob a licença MIT. Veja o arquivo `LICENSE` (se existir) para mais detalhes.
+
+## Contato
+
+Para dúvidas ou sugestões, entre em contato com [Seu Nome/Email/Link para Perfil].

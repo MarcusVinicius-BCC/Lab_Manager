@@ -28,7 +28,7 @@ body {
 h2 {
   text-align: center;
   margin-bottom: 2rem;
-  font-size: 2.5rem;
+  font-size: 2rem; /* Mobile-first: menor */
   color: var(--primary);
   font-family: 'Oswald', sans-serif;
 }
@@ -63,7 +63,7 @@ a {
 
 .logo-text {
   font-family: 'Oswald', sans-serif;
-  font-size: 2.8rem;
+  font-size: 2.2rem; /* Mobile-first: menor */
   color: var(--white);
   margin: 0;
   letter-spacing: 1px;
@@ -76,8 +76,8 @@ a {
 
 .menu-cards {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column; /* Mobile-first: empilhado */
+  align-items: stretch; /* Ocupa a largura total */
   gap: 1rem;
 }
 
@@ -88,6 +88,7 @@ a {
   transition: background-color 0.3s ease, transform 0.3s ease;
   display: flex;
   align-items: center;
+  justify-content: center; /* Centraliza o conteúdo do card */
   gap: 0.8rem;
 }
 
@@ -107,7 +108,7 @@ a {
 
 .dashboard-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: 1fr; /* Mobile-first: uma coluna */
   gap: 1.5rem;
 }
 
@@ -161,22 +162,6 @@ a {
   color: var(--danger);
 }
 
-/* Responsividade */
-@media (max-width: 768px) {
-  h2 {
-    font-size: 2rem;
-  }
-  .logo-center {
-    font-size: 2rem;
-  }
-  .menu-cards {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .menu-card {
-    justify-content: center;
-  }
-}
 /* =================================
    PÁGINAS INTERNAS (Agendamentos, etc.)
    ================================= */
@@ -184,30 +169,32 @@ a {
 /* Header Padrão */
 .header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* Mobile-first: empilhado */
+  justify-content: center;
   align-items: center;
-  padding: 1.5rem 2rem;
+  padding: 1.5rem 1rem; /* Ajuste de padding para mobile */
   background-color: var(--dark);
   color: var(--white);
   box-shadow: var(--shadow);
+  text-align: center;
 }
 
 .header h1 {
-  font-size: 2.5rem;
-  margin: 0;
+  font-size: 2rem; /* Mobile-first: menor */
+  margin: 0 0 1rem 0; /* Adiciona margem inferior para separar do nav */
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem; /* Ajuste de gap */
   font-family: 'Oswald', sans-serif;
 }
 
 /* Navegação Interna */
 nav {
   background-color: #34495e;
-  padding: 0.8rem 2rem;
+  padding: 0.8rem 1rem; /* Ajuste de padding para mobile */
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  flex-direction: column; /* Mobile-first: empilhado */
+  gap: 1rem; /* Ajuste de gap */
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 nav a {
@@ -216,6 +203,7 @@ nav a {
   transition: color 0.3s;
   display: flex;
   align-items: center;
+  justify-content: center; /* Centraliza links */
   gap: 0.5rem;
 }
 nav a:hover {
@@ -225,7 +213,7 @@ nav a:hover {
 
 /* Formulários */
 form.card {
-  padding: 2rem;
+  padding: 1.5rem; /* Ajuste de padding para mobile */
   background: var(--white);
   border-radius: 8px;
   box-shadow: var(--shadow);
@@ -234,25 +222,12 @@ form.card {
   gap: 1rem;
   border-left: none; /* Reset border from index */
   max-width: 800px; /* Largura máxima */
-  margin: 2rem auto; /* Centraliza o form */
-}
-
-@media (min-width: 768px) {
-  form.card {
-    /* Não é mais necessário dividir em colunas */
-    gap: 1.2rem; /* Ajusta o espaçamento para telas maiores */
-  }
-  
-  /* O seletor abaixo agora só se aplica ao botão, para que ele ocupe a largura total */
-  form.card button {
-    grid-column: 1 / -1;
-  }
+  margin: 1.5rem auto; /* Centraliza o form e ajusta margem */
 }
 
 form label {
   font-weight: bold;
   color: var(--dark);
-  /* A margem negativa foi removida */
 }
 
 form input,
@@ -298,11 +273,11 @@ table {
   box-shadow: var(--shadow);
   border-radius: 8px;
   overflow: hidden; /* For rounded corners */
-  min-width: 800px; /* Ajuda a evitar quebra de layout em telas menores */
+  /* min-width: 800px; Removido para mobile-first */
 }
 
 th, td {
-  padding: 1rem;
+  padding: 0.8rem; /* Ajuste de padding para mobile */
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
@@ -371,8 +346,9 @@ button[type="submit"]:hover {
 /* Célula de ações na tabela */
 td:has(> .btn) {
     display: flex;
+    flex-direction: column; /* Empilha botões em mobile */
     gap: 0.5rem;
-    align-items: center;
+    align-items: flex-start; /* Alinha botões à esquerda */
 }
 
 /* Alertas e Status */
@@ -424,7 +400,7 @@ td span.alert:not(.success):not(.error) { /* Rejeitado */
 }
 
 .form-login h2 {
-  font-size: 2.2rem;
+  font-size: 2rem; /* Ajuste para mobile */
   margin-bottom: 1rem;
 }
 
@@ -463,16 +439,16 @@ td span.alert:not(.success):not(.error) { /* Rejeitado */
 
 .calendario-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column; /* Mobile-first: empilhado */
+  justify-content: center;
   align-items: center;
-  margin-bottom: 2rem;
-  flex-wrap: wrap; /* Adicionado para melhor responsividade */
+  margin-bottom: 1.5rem; /* Ajuste de margem */
   gap: 1rem; /* Adicionado para espaçamento quando os itens quebram a linha */
 }
 
 .calendario-header h2 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.8rem; /* Ajuste para mobile */
   flex-grow: 1; /* Faz o título ocupar o espaço disponível */
   text-align: center;
 }
@@ -485,48 +461,50 @@ td span.alert:not(.success):not(.error) { /* Rejeitado */
 
 .calendario-table th {
   text-align: center;
-  padding: 0.8rem;
+  padding: 0.6rem; /* Ajuste de padding */
   background-color: var(--dark);
   color: var(--white);
   font-family: 'Oswald', sans-serif;
+  font-size: 0.9rem; /* Ajuste para mobile */
 }
 
 .calendario-table td {
   border: 1px solid #ddd;
-  height: 150px; /* Altura fixa para as células */
+  height: 100px; /* Altura fixa para as células, ajustado para mobile */
   vertical-align: top;
   padding: 0;
+  font-size: 0.85rem; /* Ajuste para mobile */
 }
 
 .calendario-table td.dia {
-  padding: 5px;
+  padding: 3px; /* Ajuste de padding */
 }
 
 .dia-numero {
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1rem; /* Ajuste para mobile */
   text-align: right;
-  padding: 5px;
+  padding: 3px; /* Ajuste de padding */
   color: var(--dark);
 }
 
 .eventos .turno {
-  padding: 4px;
-  margin-top: 4px;
-  border-radius: 4px;
+  padding: 3px; /* Ajuste de padding */
+  margin-top: 3px; /* Ajuste de margem */
+  border-radius: 3px; /* Ajuste de border-radius */
 }
 
 .eventos .turno small {
   font-weight: bold;
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 1px; /* Ajuste de margem */
   color: #777;
 }
 
 .evento {
   display: block;
-  padding: 3px;
-  border-radius: 3px;
+  padding: 2px; /* Ajuste de padding */
+  border-radius: 2px; /* Ajuste de border-radius */
   color: var(--white);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -552,7 +530,7 @@ td span.alert:not(.success):not(.error) { /* Rejeitado */
 
 .lab-photo {
   width: 100%;
-  height: 200px;
+  height: 180px; /* Ajuste de altura para mobile */
   object-fit: cover;
 }
 
@@ -568,19 +546,21 @@ td span.alert:not(.success):not(.error) { /* Rejeitado */
 
 .footer-content {
   display: flex;
-  justify-content: space-between; /* Espaço entre logo, endereço e social */
-  align-items: center; /* Alinhamento vertical */
-  flex-wrap: wrap; /* Permite quebra de linha em telas menores */
+  flex-direction: column; /* Mobile-first: empilhado */
+  justify-content: center;
+  align-items: center;
   gap: 1rem; /* Espaçamento entre os itens */
+  text-align: center; /* Centraliza tudo */
 }
 
 .footer-logo img {
-  height: 60px; /* Ajusta o tamanho da logo */
+  height: 50px; /* Ajusta o tamanho da logo para mobile */
 }
 
 .footer-address {
   flex-grow: 1; /* Permite que o endereço ocupe o espaço restante */
   text-align: center; /* Centraliza o texto do endereço */
+  order: 3; /* Coloca o endereço por último em telas pequenas */
 }
 
 .footer-address p {
@@ -602,19 +582,141 @@ td span.alert:not(.success):not(.error) { /* Rejeitado */
   color: var(--primary); /* Cor ao passar o mouse */
 }
 
-@media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column; /* Empilha logo, endereço e social em telas menores */
-    text-align: center; /* Centraliza tudo */
+/* Media Queries para telas maiores (Tablet e Desktop) */
+@media (min-width: 768px) {
+  h2 {
+    font-size: 2.5rem; /* Volta ao tamanho original para desktop */
   }
 
-  .footer-logo,
-  .footer-address,
-  .footer-social {
-    margin-bottom: 1rem; /* Espaço entre os itens empilhados */
+  .logo-text {
+    font-size: 2.8rem; /* Volta ao tamanho original para desktop */
+  }
+
+  .menu-cards {
+    flex-direction: row; /* Volta a ser linha para desktop */
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-card {
+    justify-content: flex-start; /* Alinha à esquerda para desktop */
+  }
+
+  .dashboard-cards {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Volta ao grid original */
+  }
+
+  .header {
+    flex-direction: row; /* Volta a ser linha para desktop */
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    text-align: left;
+  }
+
+  .header h1 {
+    font-size: 2.5rem; /* Volta ao tamanho original para desktop */
+    margin: 0;
+    gap: 1rem;
+  }
+
+  nav {
+    flex-direction: row; /* Volta a ser linha para desktop */
+    padding: 0.8rem 2rem;
+    gap: 1.5rem;
+  }
+
+  nav a {
+    justify-content: flex-start; /* Alinha à esquerda para desktop */
+  }
+
+  form.card {
+    padding: 2rem;
+    margin: 2rem auto;
+  }
+
+  form.card button {
+    grid-column: 1 / -1;
+  }
+
+  table {
+    min-width: 800px; /* Reintroduzido para telas maiores */
+  }
+
+  th, td {
+    padding: 1rem; /* Volta ao padding original */
+  }
+
+  td:has(> .btn) {
+    flex-direction: row; /* Volta a ser linha para desktop */
+    align-items: center;
+  }
+
+  .form-login h2 {
+    font-size: 2.2rem; /* Volta ao tamanho original para desktop */
+  }
+
+  .calendario-header {
+    flex-direction: row; /* Volta a ser linha para desktop */
+    justify-content: space-between;
+    margin-bottom: 2rem;
+  }
+
+  .calendario-header h2 {
+    font-size: 2rem; /* Volta ao tamanho original para desktop */
+    text-align: left;
+  }
+
+  .calendario-table th {
+    padding: 0.8rem;
+    font-size: 1rem;
+  }
+
+  .calendario-table td {
+    height: 150px; /* Volta à altura original */
+    font-size: 1rem;
+  }
+
+  .calendario-table td.dia {
+    padding: 5px;
+  }
+
+  .dia-numero {
+    font-size: 1.1rem;
+    padding: 5px;
+  }
+
+  .eventos .turno {
+    padding: 4px;
+    margin-top: 4px;
+    border-radius: 4px;
+  }
+
+  .eventos .turno small {
+    margin-bottom: 2px;
+  }
+
+  .evento {
+    padding: 3px;
+    border-radius: 3px;
+  }
+
+  .lab-photo {
+    height: 200px; /* Volta à altura original */
+  }
+
+  .footer-content {
+    flex-direction: row; /* Volta a ser linha para desktop */
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+  }
+
+  .footer-logo img {
+    height: 60px; /* Volta ao tamanho original */
   }
 
   .footer-address {
-    order: 3; /* Coloca o endereço por último em telas pequenas */
+    order: unset; /* Remove a ordem para desktop */
   }
 }
