@@ -1,5 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap');
 
+.rock-salt-regular {
+  font-family: "Rock Salt", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
 /* Geral */
 :root {
   --primary: #3498db;
@@ -62,7 +68,7 @@ a {
 }
 
 .logo-text {
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Rock Salt', sans-serif;
   font-size: 2.2rem; /* Mobile-first: menor */
   color: var(--white);
   margin: 0;
@@ -366,7 +372,7 @@ td:has(> .btn) {
 .alert.error {
   background-color: #f8d7da;
   border-color: #dc3545;
-  color: #721c24;
+  color: #7258c0;
 }
 
 /* Status na tabela */
