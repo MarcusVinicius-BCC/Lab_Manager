@@ -117,6 +117,9 @@ http://localhost/lab_manager_php
 ```
 
 Ou o caminho correspondente à sua configuração.
+## Usuário administrador cadastrado
+ * LOGIN: admin
+ * SENHA: admin
 
 ## Uso
 
@@ -148,4 +151,5 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo `LICENSE` (se e
 
 ## Contato
 
-Para dúvidas ou sugestões, entre em contato com [Seu Nome/Email/Link para Perfil].
+Para dúvidas ou sugestões, entre em contato com [Marcus Vinicius Campos Da Siva/ marcusufopa@gmail.com].
+=========================================\/==========\/========================================================================
