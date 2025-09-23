@@ -118,7 +118,8 @@ http://localhost/lab_manager_php
 
 Ou o caminho correspondente à sua configuração.
 
-## A página login aceita apenas cadastro de ususarios com a matricula autorizada
+## A página login aceita apenas cadastro de usuários com a matricula autorizada
+ 
  * Se deve executar o seginte comando no banco de dados: INSERT INTO matriculas_autorizadas (matricula) VALUES ('SUA_MATRICULA_AQUI');
 
 ## Usuário administrador cadastrado
