@@ -39,20 +39,21 @@ Siga os passos abaixo para configurar o projeto em seu ambiente:
     ```
 
 
-2.  **Configurar o Banco de Dados:**
+2.  **Configurar o Banco de Dados e Variáveis de Ambiente:**
     *   Crie um banco de dados chamado `lab_manager` no seu servidor MySQL/MariaDB.
     *   Importe o arquivo `lab_manager.sql` para este banco de dados. Este arquivo contém a estrutura das tabelas e dados iniciais.
-    *   Edite o arquivo `db.php` na raiz do projeto com suas credenciais de acesso ao banco de dados:
-        ```php
-        <?php
-        $host = 'localhost'; // Geralmente 'localhost'
-        $usuario = 'root';   // Seu usuário do banco de dados
-        $senha = 'sua_senha'; // Sua senha do banco de dados
-        $banco = 'lab_manager'; // Nome do banco de dados
-        // ... restante do código
-        ?>
+    *   **Configurar o arquivo `.env`:**
+        Para gerenciar as credenciais do banco de dados de forma segura e flexível, este projeto utiliza um arquivo `.env`.
+        Crie um arquivo chamado `.env` na raiz do projeto (no mesmo nível de `index.php` e `db.php`).
+        Adicione as seguintes linhas, substituindo os valores pelos seus dados de conexão com o banco de dados:
         ```
-        *(Altere `sua_senha` para a senha do seu usuário `root` ou do usuário que você configurou para o banco de dados `lab_manager`)*
+        DB_HOST=localhost
+        DB_USER=root
+        DB_PASS=mv16082005
+        DB_NAME=lab_manager
+        ```
+        *(Altere `DB_HOST`, `DB_USER`, `DB_PASS`, `DB_NAME` conforme suas configurações. `DB_PASS` deve ser a senha do seu usuário `root` ou do usuário que você configurou para o banco de dados `lab_manager`)*
+        **Importante:** O arquivo `.env` não deve ser versionado (ele já está no `.gitignore`). Certifique-se de que cada desenvolvedor crie seu próprio arquivo `.env` localmente.
 
 3.  **Configurar o Servidor Web:**
     *   Certifique-se de que seu servidor web esteja configurado para apontar para a pasta `lab_manager_php` como o diretório raiz do seu projeto.
@@ -63,8 +64,8 @@ Siga os passos abaixo para configurar o projeto em seu ambiente:
 
 Após a instalação, você pode acessar o sistema através do seu navegador, digitando o endereço configurado para o seu servidor web (ex: `http://localhost/lab_manager_php`).
 ### Usuário Administrador já cadastrado
-   login: admin
-   senha: admin
+ * login: admin
+ * senha: admin
 
 ### Registro de Usuário Administrador
 

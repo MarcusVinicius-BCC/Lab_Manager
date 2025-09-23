@@ -28,8 +28,6 @@ if ($hora_atual >= 7 && $hora_atual < 12) {
     $turno_atual = "tarde";
 } elseif (($hora_atual >= 18 && $hora_atual <= 23) || ($hora_atual >= 0 && $hora_atual < 7)) {
     $turno_atual = "noite";
-} else {
-    $turno_atual = "indefinido"; // Should not happen with correct ranges
 }
 
 // Carregar dados
@@ -69,7 +67,7 @@ foreach ($agendamentos_hoje as $agendamento) {
 <head>
   <meta charset="UTF-8">
   <title>Lab_Manager - Dashboard</title>
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css?v=1.3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -77,20 +75,23 @@ foreach ($agendamentos_hoje as $agendamento) {
   <!-- Topo -->
   <div class="home-wrapper">
     <div class="logo-center">
-      <i class="fas fa-microchip"></i> Lab_Manager
+      <img src="img/logo.png" alt="Logo da Instituição" style="max-height: 100px;">
+      <h1 class="logo-text">Lab_Manager</h1>
     </div>
     <div class="menu-cards">
       <a href="index.php" class="menu-card"><i class="fas fa-chart-bar"></i><h3>Dashboard</h3></a>
       <a href="agendamentos.php" class="menu-card"><i class="fas fa-id-card"></i><h3>Agendamento</h3></a>
       <?php if ($is_logged_in): ?>
         <?php if ($user_role === 'admin'): ?>
-          <a href="laboratorios.php" class="menu-card"><i class="fas fa-flask"></i><h3>Laboratórios</h3></a>
+          <a href="laboratorios.php" class="menu-card"><i class="fas fa-desktop"></i><h3>Laboratórios</h3></a>
           <a href="monitores.php" class="menu-card"><i class="fas fa-user-astronaut"></i><h3>Monitores</h3></a>
           <a href="professores.php" class="menu-card"><i class="fas fa-chalkboard-teacher"></i><h3>Professores</h3></a>
           <a href="aulas.php" class="menu-card"><i class="fas fa-book"></i><h3>Aulas</h3></a>
         <?php endif; ?>
         <a href="logout.php" class="menu-card"><i class="fas fa-sign-out-alt"></i><h3>Sair</h3></a>
       <?php else: ?>
+        <a href="agenda.php" class="menu-card"><i class="fas fa-calendar-alt"></i><h3>Agenda</h3></a>
+        <a href="informacoes.php" class="menu-card"><i class="fas fa-info-circle"></i><h3>Informações</h3></a>
         <a href="login.php" class="menu-card"><i class="fas fa-sign-in-alt"></i><h3>Login</h3></a>
       <?php endif; ?>
     </div>
@@ -106,7 +107,7 @@ foreach ($agendamentos_hoje as $agendamento) {
         $status_class = $status === "ocupado" ? "card-ocupado" : "card-livre";
       ?>
       <div class="card <?= $status_class ?>">
-        <h3><i class="fas fa-flask"></i> <?= htmlspecialchars($lab['nome']) ?> (<?= $lab['numero'] ?>)</h3>
+        <h3><i class="fas fa-desktop"></i> <?= htmlspecialchars($lab['nome']) ?> (<?= $lab['numero'] ?>)</h3>
         <div class="lab-info"><i class="fas fa-map-marker-alt"></i> <?= htmlspecialchars($lab['localizacao']) ?></div>
         <div class="lab-info"><strong>Status:</strong>
             <?php if ($status === "ocupado"): ?>
@@ -127,6 +128,27 @@ foreach ($agendamentos_hoje as $agendamento) {
       <?php endforeach; ?>
     </div>
   </div>
+
+  <?php if (!$is_logged_in): ?>
+  <footer class="main-footer">
+    <div class="footer-content container">
+      <div class="footer-logo">
+        <img src="img/logo.png" alt="Logo UFOPA" style="height: 80px;">
+      </div>
+      <div class="footer-address">
+        <p>Universidade Federal do Oeste do Pará</p>
+        <p>Rua Vera Paz, s/n. Bairro: Salé. Unidade Tapajós.</p>
+        <p>CEP: 68040-470 Santarém-PA</p>
+      </div>
+      <div class="footer-social">
+        <!-- Placeholder for social media icons -->
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </footer>
+  <?php endif; ?>
 
 </body>
 </html>

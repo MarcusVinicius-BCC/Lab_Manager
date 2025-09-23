@@ -110,6 +110,9 @@ $labs = $conexao->query("SELECT * FROM laboratorios ORDER BY numero")->fetchAll(
     <?php if ($user_role !== 'admin'): ?>
       <!-- Formulário Público -->
       <h2>Solicitar Agendamento</h2>
+      <div class="alert" style="background-color: #f2f2f2; border-left-color: #3498db; color: #2c3e50;">
+        <strong>Atenção:</strong> As regras de uso do Laboratório estão dispostas no regimento. Em caso de dúvidas, <a href="regimento.php" target="_blank"><strong>leia o regimento</strong></a>.
+      </div>
 <form method="POST" class="card">
   <label for="nome">Nome Completo</label>
   <input type="text" id="nome" name="nome" required>

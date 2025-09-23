@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22/09/2025 às 03:53
+-- Tempo de geração: 23/09/2025 às 01:54
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -79,7 +79,18 @@ INSERT INTO `aulas` (`id`, `disciplina`, `professor_id`, `laboratorio_id`, `turn
 (6, 'PC010037 - PROGRAMAÇÃO PARA WEB', 9, 8, 'noite', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
 (7, 'PC010007 - LABORATÓRIO DE PROGRAMAÇÃO', 7, 8, 'tarde', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
 (8, 'SBCC0024 - ARQUITETURA E DESEMPENHO DE BANCO DE DADOS', 8, 6, 'manhã', 'quinta', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
-(9, 'TESTE', 10, 7, 'manhã', 'segunda', '2025.2', '2025-08-08', '2025-12-17', 'ativa');
+(9, 'TESTE', 10, 7, 'manhã', 'segunda', '2025.2', '2025-08-08', '2025-12-17', 'ativa'),
+(10, 'AVALIAÇÃO DE DESEMPENHO', 6, 7, 'noite', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(11, 'Fundamentos de Redes', 13, 7, 'noite', 'segunda', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(12, 'Introdução à Ciência da Computação', 13, 7, 'manhã', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(13, 'Cálculo Numérico', 12, 7, 'tarde', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(14, 'Organização de Computadores', 13, 7, 'noite', 'quarta', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(15, 'Organização e Arquitetura de Computadores', 13, 7, 'manhã', 'quinta', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(16, 'COMPILADORE', 13, 7, 'manhã', 'sábado', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(17, 'Interação Humano Computador', 11, 6, 'noite', 'segunda', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(18, 'Banco de Dados', 8, 6, 'noite', 'terça', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(19, 'Lab. de Programação', 7, 8, 'noite', 'quarta', '2025.2', '2025-08-18', '2025-12-17', 'ativa'),
+(20, 'Sistemas distribuídos', 9, 8, 'tarde', 'quinta', '2025.2', '2025-08-18', '2025-12-17', 'ativa');
 
 -- --------------------------------------------------------
 
@@ -107,17 +118,18 @@ CREATE TABLE `laboratorios` (
   `capacidade` int(11) DEFAULT NULL,
   `numero` varchar(255) NOT NULL,
   `projetor` tinyint(1) NOT NULL DEFAULT 0,
-  `localizacao` varchar(255) DEFAULT NULL
+  `localizacao` varchar(255) DEFAULT NULL,
+  `foto_url` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 --
 -- Despejando dados para a tabela `laboratorios`
 --
 
-INSERT INTO `laboratorios` (`id`, `nome`, `capacidade`, `numero`, `projetor`, `localizacao`) VALUES
-(6, 'LABINOVA', 25, '221', 0, 'BMT I 2º piso'),
-(7, 'LAB', 35, '219', 0, 'BMT I 2º piso'),
-(8, 'LABORATORIO DE ALGORITMOS', 35, '37', 0, 'CENTRO DE BSI');
+INSERT INTO `laboratorios` (`id`, `nome`, `capacidade`, `numero`, `projetor`, `localizacao`, `foto_url`) VALUES
+(6, 'LabINOVA', 35, '221', 0, 'BMT I 2º piso', 'Lab_Inova.png'),
+(7, 'LabDev', 22, '219', 0, 'BMT I 2º piso', 'Lab_Dev.png'),
+(8, 'LabProg', 23, '37', 0, 'Bloco 11', 'Lab_Prog.png');
 
 -- --------------------------------------------------------
 
@@ -197,7 +209,9 @@ INSERT INTO `professores` (`id`, `nome`, `email`, `telefone`, `matricula`, `area
 (8, 'SOCORRO VANIA LOURENCO ALVES', 'socorro.alves@ufopa.edu.br', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
 (9, 'RENNAN JOSE MAIA DA SILVA', 'rennanmaia@gmail.com', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
 (10, 'BRUNO ALMEIDA DA SILVA', 'brunostm@gmail.com', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
-(11, 'MARCIO JOSE MOUTINHO DA PONTE', 'mjmponte@gmail.com', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo');
+(11, 'MARCIO JOSE MOUTINHO DA PONTE', 'mjmponte@gmail.com', 'xxxxxxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
+(12, 'HELAINE CRISTINA MORAES FURTADO', 'helaine.furtado@ufopa.edu.br', 'xxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo'),
+(13, 'CÁSSIO DAVID BORRALHO PINHEIRO', 'cassio.pinheiro@ufopa.edu.br', 'xxxxxxxxxxx', 'xxxxxxxxxxxxx', 'xxxxxxxxxxxxxxxxxxx', 'ativo');
 
 -- --------------------------------------------------------
 
@@ -293,7 +307,7 @@ ALTER TABLE `agendamentos`
 -- AUTO_INCREMENT de tabela `aulas`
 --
 ALTER TABLE `aulas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT de tabela `horarios`
@@ -323,7 +337,7 @@ ALTER TABLE `monitores`
 -- AUTO_INCREMENT de tabela `professores`
 --
 ALTER TABLE `professores`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT de tabela `usuarios`
@@ -358,3 +372,4 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
