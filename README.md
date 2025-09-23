@@ -117,6 +117,10 @@ http://localhost/lab_manager_php
 ```
 
 Ou o caminho correspondente à sua configuração.
+
+## A página login aceita apenas cadastro de ususarios com a matricula autorizada
+ * Se deve executar o seginte comando no banco de dados: INSERT INTO matriculas_autorizadas (matricula) VALUES ('SUA_MATRICULA_AQUI');
+
 ## Usuário administrador cadastrado
  * LOGIN: admin
  * SENHA: admin
@@ -151,5 +155,5 @@ Este projeto está licenciado sob a licença MIT. Veja o arquivo `LICENSE` (se e
 
 ## Contato
 
-Para dúvidas ou sugestões, entre em contato com [Marcus Vinicius Campos Da Siva/ marcusufopa@gmail.com].
-=========================================\/==========\/========================================================================
+Para dúvidas ou sugestões, entre em contato com [Marcus Vinicius Campos Da Siva/ marcusufopa@gmail.com]
+========================================================================================
